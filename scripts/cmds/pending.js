@@ -2,9 +2,9 @@ module.exports = {
   config: {
     name: "pending",
     version: "1.0",
-    author: "MIKI",
+    author: "ArYan ",
     countDown: 5,
-    role: 0,
+    role: 2,
     shortDescription: {
       vi: "",
       en: ""
@@ -13,7 +13,7 @@ module.exports = {
       vi: "",
       en: ""
     },
-    category: "Goat-alAuthor"
+    category: "ArYan"
   },
 
 langs: {
@@ -35,19 +35,28 @@ onReply: async function({ api, event, Reply, getLang, commandName, prefix }) {
 
     if (isNaN(body) && body.indexOf("c") == 0 || body.indexOf("cancel") == 0) {
         const index = (body.slice(1, body.length)).split(/\s+/);
-        for (const singleIndex of index) {
-            console.log(singleIndex);
-            if (isNaN(singleIndex) || singleIndex <= 0 || singleIndex > Reply.pending.length) return api.sendMessage(getLang("invaildNumber", singleIndex), threadID, messageID);
-            api.removeUserFromGroup(api.getCurrentUserID(), Reply.pending[singleIndex - 1].threadID);
+        for (const ArYanIndex of index) {
+            console.log(ArYanIndex);
+            if (isNaN(ArYanIndex) || ArYanIndex <= 0 || ArYanIndex > Reply.pending.length) return api.sendMessage(getLang("invaildNumber", ArYanIndex), threadID, messageID);
+            api.removeUserFromGroup(api.getCurrentUserID(), Reply.pending[ArYanIndex - 1].threadID);
             count+=1;
         }
         return api.sendMessage(getLang("cancelSuccess", count), threadID, messageID);
     }
     else {
         const index = body.split(/\s+/);
-        for (const singleIndex of index) {
-            if (isNaN(singleIndex) || singleIndex <= 0 || singleIndex > Reply.pending.length) return api.sendMessage(getLang("invaildNumber", singleIndex), threadID, messageID);
-            api.sendMessage(`𝐀𝐒𝐒𝐀𝐋𝐀𝐌𝐔𝐀𝐋𝐀𝐈𝐊𝐔𝐌 🦆 𝗖𝗛𝗔𝗧 𝗕𝗢𝗧 𝗢𝗡 🦆🫶\n\n•𝗕𝗼𝘁 ${prefix}𝗵𝗲𝗹𝗽 𝘀𝗲𝗲 𝘆𝗼𝘂 𝗮𝗹𝗹 𝗰𝗼𝗺𝗺𝗮𝗻𝗱𝘀\n\n•𝗛𝗮𝘃𝗲 𝗮 𝗻𝗶𝗰𝗲 𝐘𝐎𝐔𝐑 𝐆𝐑𝐎𝐔𝐏`, Reply.pending[singleIndex - 1].threadID);
+        for (const ArYanIndex of index) {
+            if (isNaN(ArYanIndex) || ArYanIndex <= 0 || ArYanIndex > Reply.pending.length) return api.sendMessage(getLang("invaildNumber", ArYanIndex), threadID, messageID);
+            api.sendMessage(`🦆⪼  𝐂𝐎𝐌𝐍𝐀𝐍𝐃  ⪻🦆 
+╭──────────────⭓
+│‣ 𝐆𝐥𝐨𝐛𝐚𝐥 𝐩𝐫𝐞𝐟𝐢𝐱: ) 
+│‣ 𝐘𝐨𝐮𝐫 𝐠𝐫𝐨𝐮𝐩 𝐩𝐫𝐞𝐟𝐢𝐱: ) 
+╰──────────────⭓
+╭──────────────⭓
+│➜ 𝐎𝐭𝐡𝐞𝐫 𝐃𝐞𝐭𝐚𝐢𝐥𝐬🦆
+│Owner : 🄵🄰🄷🄰🄳
+│FB : BD Fahad 
+╰──────────────⭓`, Reply.pending[ArYanIndex - 1].threadID);
             count+=1;
         }
         return api.sendMessage(getLang("approveSuccess", count), threadID, messageID);
@@ -66,7 +75,7 @@ onStart: async function({ api, event, getLang, commandName }) {
 
   const list = [...spam, ...pending].filter(group => group.isSubscribed && group.isGroup);
 
-    for (const single of list) msg += `${index++}/ ${single.name}(${single.threadID})\n`;
+    for (const ArYan of list) msg += `${index++}/ ${ArYan.name}(${ArYan.threadID})\n`;
 
     if (list.length != 0) return api.sendMessage(getLang("returnListPending", list.length, msg), threadID, (err, info) => {
     global.GoatBot.onReply.set(info.messageID, {
