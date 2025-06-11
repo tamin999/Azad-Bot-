@@ -4,9 +4,9 @@ module.exports = {
   config: {
     name: "4k",
     aliases: ["upscale"],
-    version: "1.1",
+    version: "0.1",
     role: 0,
-    author: "Team_Calyx | Fahim_Noob",
+    author: "Fahim_Noob",
     countDown: 5,
     longDescription: "Upscale images to 4K resolution.",
     category: "image",
@@ -19,10 +19,10 @@ module.exports = {
       return message.reply("Please reply to an image to upscale it.");
     }
     const imgurl = encodeURIComponent(event.messageReply.attachments[0].url);
-    const noobs = 'onrender.com';
+    const noobs = 'xyz';
     const upscaleUrl = `https://smfahim.${noobs}/4k?url=${imgurl}`;
     
-    message.reply("🦆| Processing... Please wait a moment.", async (err, info) => {
+    message.reply("🦆|Photo 4k wait...", async (err, info) => {
       try {
         const { data: { image } } = await axios.get(upscaleUrl);
         const attachment = await global.utils.getStreamFromURL(image, "upscaled-image.png");
@@ -36,7 +36,7 @@ module.exports = {
 
       } catch (error) {
         console.error(error);
-        message.reply("📛| There was an error upscaling your image.");
+        message.reply("❌| There was an error upscaling your image.");
       }
     });
   }
