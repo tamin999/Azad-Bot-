@@ -12,14 +12,14 @@
 	"antiInbox": true,
 	"language": "en",
 	"notesLanguage": "change to your language with ISO 639-1 code, available languages: vi (Vietnamese), en (English)",
-	"nickNameBot": "FAHAD",
+	"nickNameBot": "Yoʋʀ ʌzʌɗ-😼🖤",
 	"prefix": ")",
 	"adminOnly": {
 		"enable": false,
 		"ignoreCommand": []
 	},
 	"adminBot": [
-		"YOUR_UID"
+		"61557361836577"
 	],
 	"nisanBot": [
 		"GROUP_ID"
