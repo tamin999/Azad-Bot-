@@ -1,4 +1,4 @@
-#cmd install uptime4.js const { GoatWrapper } = require("fca-liane-utils");
+ const { GoatWrapper } = require("fca-liane-utils");
 const { config } = global.GoatBot;
 const os = require("os");
 
