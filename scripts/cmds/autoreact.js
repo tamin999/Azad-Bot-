@@ -1,9 +1,18 @@
-module.exports.config = {
-  name: "autoreact",
-  version: "1.1.1",
-  hasPermission: 0,
-  credits: "𝐂𝐘𝐁𝐄𝐑 ☢️_𖣘 -𝐁𝐎𝐓 ⚠️ 𝑻𝑬𝑨𝑴_ ☢️",
-  description: "Bot React",
+const axios = require("axios");
+const fs = require("fs");
+const { shortenURL } = global.utils;
+const baseApiUrl = async () => {
+  return "https://www.noobs-api.rf.gd/dipto";
+};
+
+module.exports = {
+  config: {
+    name: "bot react",
+    version: "1.0.1",
+    author: "Dipto",
+    countDown: 0,
+    role: 0,
+    {description: "Bot React",
   commandCategory: "No Prefix",
   usages: '[]',
   cooldowns: 0,
