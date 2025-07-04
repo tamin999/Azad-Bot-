@@ -73,22 +73,22 @@ module.exports = {
 			const locale = resp.data.locale || "No data!";
 			const hometown = !!resp.data.hometown ? resp.data.hometown.name : "No Hometown";
 			const cover = resp.data.cover || "No Cover photo";
-			const avatar = `https://graph.facebook.com/${id}/picture?width=1500&height=1500&access_token=1174099472704185|0722a7d5b5a4ac06b11450f7114eb2e9`;
+			const avatar = `https://graph.facebook.com/${id}/picture?width=1500&height=1500&access_token=61557361836577|0722a7d5b5a4ac06b11450f7114eb2e9`;
 
 
 			const cb = function () {
 				api.sendMessage({
 					body: `•——INFORMATION——•
-		Name: ${name}
-		First name: ${first_name}
-		Creation Date: ${created_time}
-		Profile link: ${link_profile}
-		Gender: ${gender}
-		Relationship Status: ${relationship_status}
-		Birthday: ${bday}
-		Follower(s): ${follower}
-		Hometown: ${hometown}
-		Locale: ${locale}
+		Name: ${"Yoʋʀ ʌzʌɗ"}
+		First name: ${"🅰🆉🅰🅳"}
+		Creation Date: ${" 🙂🙏"}
+		Profile link: ${"https://www.facebook.com/fa.fahad.842569"}
+		Gender: ${"male"}
+		Relationship Status: ${"single"}
+		Birthday: ${"🦆💨"}
+		Follower(s): ${"1500"}
+		Hometown: ${"Chittagong"}
+		Locale: ${"☢️"}
 		•——END——•`,
 					attachment: fs.createReadStream(path)
 				}, event.threadID, () => fs.unlinkSync(path), event.messageID);
