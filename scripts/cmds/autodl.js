@@ -37,7 +37,7 @@ module.exports = {
         dipto.startsWith("https://vm.tiktok.com") ||
         dipto.startsWith("https://fb.watch")
       ) {
-        api.setMessageReaction("🐤", event.messageID, (err) => {}, true);
+        api.setMessageReaction("🐸", event.messageID, (err) => {}, true);
 
         const path = __dirname + `/cache/diptoo.mp4`;
 
