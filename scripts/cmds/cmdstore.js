@@ -11,7 +11,7 @@ module.exports.config = {
   role: 0,
   version: "6.9",
   description: {
-    en: "Commands Store of Dipto",
+    en: "Commands Store of 🅰🆉🅰🅳",
   },
   countDown: 3,
   category: "goatbot",
@@ -33,7 +33,7 @@ module.exports.onStart = async function ({ api, event, args }) {
       } else if (query.length === 1) {
         finalArray = cmds.filter(cmd => cmd.cmd.startsWith(query));
         if (finalArray.length === 0) {
-          return api.sendMessage(`🦆 | No commands found starting with "${query}".`, event.threadID, event.messageID);
+          return api.sendMessage(`🐸 | No commands found starting with "${query}".`, event.threadID, event.messageID);
         }
       } else {
         finalArray = cmds.filter(cmd => cmd.cmd.includes(query));
@@ -55,7 +55,7 @@ module.exports.onStart = async function ({ api, event, args }) {
     const startIndex = (page - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
     const cmdsToShow = finalArray.slice(startIndex, endIndex);
-    let msg = `╭───✦ Cmd Store ✦───╮\n│ Page ${page} of ${totalPages} page(s)\n│ Total ${finalArray.length} commands\n`;
+    let msg = `╭───✦🅰🆉🅰🅳 Cmd Store ✦───╮\n│ Page ${page} of ${totalPages} page(s)\n│ Total ${finalArray.length} commands\n`;
     cmdsToShow.forEach((cmd, index) => {
       msg += `│ ───✦ ${startIndex + index + 1}. ${cmd.cmd}\n│ AUTHOR: ${cmd.author}\n│ UPDATE: ${cmd.update || null}\n`;
     });
