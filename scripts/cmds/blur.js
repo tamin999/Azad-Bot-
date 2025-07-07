@@ -23,7 +23,7 @@ module.exports = {
         }else if (args[0]){
             imageUrl = args[0]
         }else {
-            return message.reply("❎ | 𝙿𝚕𝚎𝚊𝚜𝚎 𝚛𝚎𝚙𝚕𝚢 𝚝𝚘 𝚊𝚗 𝚒𝚖𝚊𝚐𝚎.");
+            return message.reply("🙂🐸 | 𝙿𝚕𝚎𝚊𝚜𝚎 𝚛𝚎𝚙𝚕𝚢 𝚝𝚘 𝚊𝚗 𝚒𝚖𝚊𝚐𝚎.");
         }
         if (blurLevel){
             blurLevel = blurLevel;
