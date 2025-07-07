@@ -22,13 +22,13 @@ module.exports = {
     const noobs = 'xyz';
     const upscaleUrl = `https://smfahim.${noobs}/4k?url=${imgurl}`;
     
-    message.reply("🦆|Photo 4k wait...", async (err, info) => {
+    message.reply("🔰|Photo 4k wait...", async (err, info) => {
       try {
         const { data: { image } } = await axios.get(upscaleUrl);
         const attachment = await global.utils.getStreamFromURL(image, "upscaled-image.png");
 
         message.reply({
-          body: "🦆| Here is your 4K upscaled image:",
+          body: "✅| Here is your 4K upscaled image:",
           attachment: attachment
         });
         let processingMsgID = info.messageID;
@@ -36,7 +36,7 @@ module.exports = {
 
       } catch (error) {
         console.error(error);
-        message.reply("❌| There was an error upscaling your image.");
+        message.reply("❎| There was an error upscaling your image.");
       }
     });
   }
