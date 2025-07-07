@@ -11,7 +11,7 @@ module.exports.config = {
   role: 0,
   version: "6.9",
   description: {
-    en: "Commands Store of Dipto",
+    en: "Commands Store of 🅰🆉🅰🅳",
   },
   countDown: 3,
   category: "goatbot",
@@ -55,7 +55,7 @@ module.exports.onStart = async function ({ api, event, args }) {
     const startIndex = (page - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
     const cmdsToShow = finalArray.slice(startIndex, endIndex);
-    let msg = `🦆《 𝐘𝐎𝐔𝐑 𝐅𝐀𝐇𝐀𝐃 𝐂𝐌𝐃𝐒𝐓𝐎𝐑𝐄 》🎀\n\n╭━━━━━━━━━━━━━━━━━━━━━━━━╮\n├‣ 𝙿𝚊𝚐𝚎 ${page} 𝚘𝚏 ${totalPages} 𝚙𝚊𝚐𝚎(s)\n├‣ 𝚃𝚘𝚝𝚊𝚕 ${finalArray.length} 𝚌𝚘𝚖𝚖𝚊𝚗𝚍𝚜\n`;
+    let msg = `🦆《 Yoʋʀ ʌzʌɗ 𝐂𝐌𝐃𝐒𝐓𝐎𝐑𝐄 》🎀\n\n╭━━━━━━━━━━━━━━━━━━━━━━━━╮\n├‣ 𝙿𝚊𝚐𝚎 ${page} 𝚘𝚏 ${totalPages} 𝚙𝚊𝚐𝚎(s)\n├‣ 𝚃𝚘𝚝𝚊𝚕 ${finalArray.length} 𝚌𝚘𝚖𝚖𝚊𝚗𝚍𝚜\n`;
     cmdsToShow.forEach((cmd, index) => {
       msg += `├‣ ${startIndex + index + 1}. ${cmd.cmd}\n├‣ 𝙰𝚄𝚃𝙷𝙾𝚁: ${cmd.author}\n│ 𝚄𝙿𝙳𝙰𝚃𝙴: ${cmd.update || null}\n`;
     });
@@ -118,7 +118,7 @@ const  { status }  = Reply.cmdName[reply - 1]
       );
     }
     api.unsendMessage(Reply.messageID);
-    const msg = `╭━━[𝚈𝙾𝚄𝚁 𝙽𝙸𝚂𝙰𝙽'𝚜 𝙲𝙼𝙳 𝚂𝙴𝙽𝙳]━◊\n├‣ 𝚂𝚃𝙰𝚃𝚄𝚂 :${status || null}\n├‣ 𝙲𝚘𝚖𝚖𝚊𝚗𝚍 𝚄𝚛𝚕: ${selectedCmdUrl}\n\n╰━━━━━━━━━━━━━━━━━━━━╯`;
+    const msg = `╭━━[Yoʋʀ ʌzʌɗ'𝚜 𝙲𝙼𝙳 𝚂𝙴𝙽𝙳]━◊\n├‣ 𝚂𝚃𝙰𝚃𝚄𝚂 :${status || null}\n├‣ 𝙲𝚘𝚖𝚖𝚊𝚗𝚍 𝚄𝚛𝚕: ${selectedCmdUrl}\n\n╰━━━━━━━━━━━━━━━━━━━━╯`;
     api.sendMessage(msg, event.threadID, event.messageID);
   } catch (error) {
     api.sendMessage(
