@@ -5,7 +5,7 @@ module.exports = {
   config: Object.freeze({
     name: "help",
     version: "1.20",
-    author: "BaYjid",
+    author: "azad",
     countDown: 5,
     role: 0,
     shortDescription: { en: "📖 View command usage" },
@@ -38,7 +38,7 @@ module.exports = {
 
       return message.reply(
 `┏━━━━━━━━━┓
-┃𝐂𝐎𝐌𝐌𝐀𝐍𝐃 🦈 𝐈𝐍𝐅𝐎
+┃🎀𝗔𝘇𝗮𝗱 𝗰𝗵𝗮𝘁 𝗯𝗼𝘁 𝐈𝐍𝐅𝐎🎀
 ┣━━━━━━━━━┫
 ┃ 🔹 𝐍𝐚𝐦𝐞: ${configCommand.name}
 ┃ 📄 𝐃𝐞𝐬𝐜: ${configCommand.longDescription?.en || "No description"}
@@ -73,7 +73,7 @@ module.exports = {
       return message.reply(`❌ No commands found for ${filterMsg}.`);
     }
 
-    let msg = `┏━━[ 𝐁𝐎𝐓 𝐌𝐄𝐍𝐔 ]━━┓\n`;
+    let msg = `┏━━[ 🎀𝗔𝘇𝗮𝗱 𝗰𝗵𝗮𝘁 𝗯𝗼𝘁🎀 ]━━┓\n`;
 
     Object.keys(categories).sort().forEach(category => {
       msg += `┃\n┃ ✦ 𝐂𝐚𝐭𝐞𝐠𝐨𝐫𝐲: ${category.toUpperCase()}\n`;
