@@ -108,7 +108,7 @@ module.exports = {
       const endIndex = startIndex + itemsPerPage;
       const displayedCategories = displayNames.slice(startIndex, endIndex);
 
-      const message = `🅰🆉🅰🅳 𝐀𝐥𝐛𝐮𝐦 𝐕𝐢𝐝𝐞𝐨 𝐋𝐢𝐬𝐭 🦆\n` +
+      const message = `🎀𝗔𝘇𝗮𝗱 𝗰𝗵𝗮𝘁 𝗯𝗼𝘁 𝐀𝐥𝐛𝐮𝐦 𝐋𝐢𝐬𝐭🎀\n` +
         "𐙚━━━━━━━━━━━━━━━━━━━━━ᡣ𐭩\n" +
         displayedCategories.map((option, index) => `${startIndex + index + 1}. ${option}`).join("\n") +
         "\n𐙚━━━━━━━━━━━━━━━━━━━━━ᡣ𐭩" +
