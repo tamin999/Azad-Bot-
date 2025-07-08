@@ -12,12 +12,12 @@ module.exports = {
 
   langs: { 
     en: { 
-      invalidNumber: "❌ 『%1』 is not a valid number!", 
-      cancelSuccess: "❌ Refused 『%1』 thread(s)!", 
+      invalidNumber: "❎ 『%1』 is not a valid number!", 
+      cancelSuccess: "❎ Refused 『%1』 thread(s)!", 
       approveSuccess: "✅ Approved 『%1』 thread(s) successfully!", 
       cantGetPendingList: "⚠️ Can't get the pending list!", 
-      returnListPending: "🟢『PENDING』🟢\n\n❮ Total threads to approve: 『%1』❯\n\n%2", 
-      returnListClean: "🟡『PENDING』🟡\nNo pending threads found!"
+      returnListPending: "☢️『PENDING』☢️\n\n❮ Total threads to approve: 『%1』❯\n\n%2", 
+      returnListClean: "↪️『PENDING』↩️\nNo pending threads found!"
     } 
   },
 
@@ -42,7 +42,7 @@ module.exports = {
 
         api.sendMessage(
           `╔════════════════╗\n` +
-          `║💻 𝐴𝑧𝑎𝑑  𝐶ℎ𝑎𝑡 𝗕𝗢𝗧 💻\n` +
+          `║💻 ᴀᴢᴀᴅ ᴄʜᴀᴛ ʙᴏᴛ 💻\n` +
           `╚════════════════╝\n\n` +
           `📩 𝗧𝗵𝗮𝗻𝗸 𝘆𝗼𝘂 𝗳𝗼𝗿 𝗶𝗻𝘃𝗶𝘁𝗶𝗻𝗴 𝗺𝗲! 🌟\n\n` +
           `💱 𝗟𝗲𝘁'𝘀 𝗴𝗲𝘁 𝘀𝘁𝗮𝗿𝘁𝗲𝗱!\n` +
