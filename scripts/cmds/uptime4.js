@@ -90,7 +90,7 @@ module.exports = {
 │ 🖼️ Image  : ${mediaStatus.Image}   🎥 Video : ${mediaStatus.Video}
 │ 🔊 Audio  : ${mediaStatus.Audio}   📄 File  : ${mediaStatus.File}
 │ 🗑️ Delete : ${mediaStatus.Delete}
-╰─[ 🦆Goat Bot V2🦆]─╯`;
+╰─[ 🦆ᴀᴢᴀᴅ ᴄʜᴀᴛ ʙᴏᴛ🦆]─╯`;
 
       api.sendMessage(msg, event.threadID);
     } catch (err) {
