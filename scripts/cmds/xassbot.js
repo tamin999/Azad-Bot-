@@ -1,7 +1,7 @@
 module.exports.config = {
   name: "xass",
   version: 0.2,
-  author: "BaYjid",
+  author: "azad",
   category: "npx",
   description: "xass bot",
   countdown: 5,
@@ -19,11 +19,11 @@ module.exports.onChat = async ({ api, event, args }) => {
         {
           body: 
 `┏━━━✦✗✦━━━┓
- 𝐴𝑧𝑎𝑑 𝑐ℎ𝑎𝑡 𝑏𝑜𝑡  
+ 🎀ᴀᴢᴀᴅ ᴄʜᴀᴛ ʙᴏᴛ🎀  
 ┗━━━✦✗✦━━━┛
 > Nickname: - 𝑎𝑧𝑎𝑑•-🦈🕸️🫀
 > Owner: -𝑦𝑜𝑢𝑟 𝑎𝑧𝑎𝑑-•-🕷️🕸️🫀 (Etx)
-> 𝑎𝑧𝑎𝑑 𝐁𝐎𝐓__/:;)🤍
+> 🅰🆉🅰🅳 𝐁𝐎𝐓__/:;)🤍
 🦈🫀`,
           attachment: await global.utils.getStreamFromURL("http://160.191.129.54:5000/cdn/gTPVJrZLd.jpg"),
         },
