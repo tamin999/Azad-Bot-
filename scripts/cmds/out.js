@@ -25,6 +25,6 @@ module.exports = {
  } else {
  id = parseInt(args.join(" "));
  }
- return api.sendMessage('𝐎𝐊 𝐁𝐘𝐄 𝐋𝐄𝐅𝐓 𝐆𝐑𝐎𝐔𝐏 🦆', id, () => api.removeUserFromGroup(api.getCurrentUserID(), id))
+ return api.sendMessage('🎀𝗔𝘇𝗮𝗱 𝗰𝗵𝗮𝘁 𝗯𝗼𝘁 𝐋𝐄𝐅𝐓 𝐆𝐑𝐎𝐔𝐏🎀', id, () => api.removeUserFromGroup(api.getCurrentUserID(), id))
 		}
 	};
