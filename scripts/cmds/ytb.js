@@ -46,12 +46,12 @@ module.exports = {
   videoID = match ? match[1] : null;
 				const { data: { title, downloadLink, quality } } = await axios.get(`${await baseApiUrl()}/ytDl3?link=${videoID}&format=${format}&quality=3`);
 await api.sendMessage({
-					body: `• Title: ${title}\n• Quality: ${quality}`,
+					body: `â€¢ Title: ${title}\nâ€¢ Quality: ${quality}`,
 					attachment: await dipto(downloadLink, path)
 				}, event.threadID, () => fs.unlinkSync(path), event.messageID);
 			} catch (e) {
 				console.error(e);
-				return api.sendMessage('❌ Failed to download the video/audio. Please try again later.', event.threadID, event.messageID);
+				return api.sendMessage('âŒ Failed to download the video/audio. Please try again later.', event.threadID, event.messageID);
 			}
 		} }
 		args.shift();
@@ -61,11 +61,11 @@ await api.sendMessage({
 		try {
 			result = (await axios.get(`${await baseApiUrl()}/ytFullSearch?songName=${keyWord}`)).data.slice(0, maxResults);
 		} catch (err) {
-			return api.sendMessage("❌ An error occurred: " + err.message, event.threadID, event.messageID);
+			return api.sendMessage("âŒ An error occurred: " + err.message, event.threadID, event.messageID);
 		}
 
 		if (result.length === 0) {
-			return api.sendMessage("⭕ No search results match the keyword: " + keyWord, event.threadID, event.messageID);
+			return api.sendMessage("â­• No search results match the keyword: " + keyWord, event.threadID, event.messageID);
 		}
 
 		let msg = "";
@@ -94,7 +94,7 @@ await api.sendMessage({
 		const choice = parseInt(event.body);
 
 		if (isNaN(choice) || choice <= 0 || choice > result.length) {
-			return api.sendMessage('❌ Invalid choice. Please reply with a valid number.', event.threadID, event.messageID);
+			return api.sendMessage('âŒ Invalid choice. Please reply with a valid number.', event.threadID, event.messageID);
 		}
 
 		const selectedVideo = result[choice - 1];
@@ -108,12 +108,12 @@ await api.sendMessage({
 
 				api.unsendMessage(Reply.messageID);
 				await api.sendMessage({
-					body: `• Title: ${title}\n• Quality: ${quality}`,
+					body: `â€¢ Title: ${title}\nâ€¢ Quality: ${quality}`,
 					attachment: await dipto(downloadLink, path)
 				}, event.threadID, () => fs.unlinkSync(path), event.messageID);
 			} catch (e) {
 				console.error(e);
-				return api.sendMessage('❌ Failed to download the video/audio. Please try again later.', event.threadID, event.messageID);
+				return api.sendMessage('âŒ Failed to download the video/audio. Please try again later.', event.threadID, event.messageID);
 			}
 		}
 
@@ -122,12 +122,12 @@ await api.sendMessage({
 				const { data } = await axios.get(`${await baseApiUrl()}/ytfullinfo?videoID=${videoID}`);
 				api.unsendMessage(Reply.messageID);
 				await api.sendMessage({
-					body: `✨ | 𝚃𝚒𝚝𝚕𝚎: ${data.title}\n⏳ | 𝙳𝚞𝚛𝚊𝚝𝚒𝚘𝚗: ${data.duration / 60} minutes\n𝚁𝚎𝚜𝚘𝚕𝚞𝚝𝚒𝚘𝚗: ${data.resolution}\n👀 | 𝚅𝚒𝚎𝚠 𝙲𝚘𝚞𝚗𝚝: ${data.view_count}\n👍🏻 | 𝙻𝚒𝚔𝚎𝚜: ${data.like_count}\n📬 | 𝙲𝚘𝚖𝚖𝚎𝚗𝚝𝚜: ${data.comment_count}\n♻️ | 𝙲𝚊𝚝𝚎𝚐𝚘𝚛𝚒𝚎𝚜: ${data.categories[0]}\n🌐 | 𝙲𝚑𝚊𝚗𝚗𝚎𝚕: ${data.channel}\n🧍🏻‍♂️ | 𝚄𝚙𝚕𝚘𝚊𝚍𝚎𝚛 𝙸𝚍: ${data.uploader_id}\n👥 | 𝚂𝚞𝚋𝚜𝚌𝚛𝚒𝚋𝚎𝚛𝚜: ${data.channel_follower_count}\n🔗 | 𝙲𝚑𝚊𝚗𝚗𝚎𝚕 𝚄𝚛𝚕: ${data.channel_url}\n🔗 | 𝚅𝚒𝚍𝚎𝚘 𝚄𝚛𝚕: ${data.webpage_url}`,
+					body: `âœ¨ | ðšƒðš’ðšðš•ðšŽ: ${data.title}\nâ³ | ð™³ðšžðš›ðšŠðšðš’ðš˜ðš—: ${data.duration / 60} minutes\nðšðšŽðšœðš˜ðš•ðšžðšðš’ðš˜ðš—: ${data.resolution}\nðŸ‘€ | ðš…ðš’ðšŽðš  ð™²ðš˜ðšžðš—ðš: ${data.view_count}\nðŸ‘ðŸ» | ð™»ðš’ðš”ðšŽðšœ: ${data.like_count}\nðŸ“¬ | ð™²ðš˜ðš–ðš–ðšŽðš—ðšðšœ: ${data.comment_count}\nâ™»ï¸ | ð™²ðšŠðšðšŽðšðš˜ðš›ðš’ðšŽðšœ: ${data.categories[0]}\nðŸŒ | ð™²ðš‘ðšŠðš—ðš—ðšŽðš•: ${data.channel}\nðŸ§ðŸ»â€â™‚ï¸ | ðš„ðš™ðš•ðš˜ðšŠðšðšŽðš› ð™¸ðš: ${data.uploader_id}\nðŸ‘¥ | ðš‚ðšžðš‹ðšœðšŒðš›ðš’ðš‹ðšŽðš›ðšœ: ${data.channel_follower_count}\nðŸ”— | ð™²ðš‘ðšŠðš—ðš—ðšŽðš• ðš„ðš›ðš•: ${data.channel_url}\nðŸ”— | ðš…ðš’ðšðšŽðš˜ ðš„ðš›ðš•: ${data.webpage_url}`,
 					attachment: await diptoSt(data.thumbnail, 'info_thumb.jpg')
 				}, event.threadID, event.messageID);
 			} catch (e) {
 				console.error(e);
-				return api.sendMessage('❌ Failed to retrieve video info. Please try again later.', event.threadID, event.messageID);
+				return api.sendMessage('âŒ Failed to retrieve video info. Please try again later.', event.threadID, event.messageID);
 			}
 		}
 	}
