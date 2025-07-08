@@ -30,7 +30,7 @@ module.exports = {
     const topUsersList = topUsers.map(
       (user, index) => `${index + 1}. 🎀 ${user.name}: 💸 ${formatMoney(user.money)} 💵`
     );
-    const messageText = `🖤▶ ●───ʏᴏᴜʀ ᴀᴢᴀᴅ ᴄʜᴀᴛ ʙᴏᴛ────▶ ●🎉\n \n${topUsersList.join('\n \n')}\n\n🌟𝙺𝙴𝙴𝙿 𝙀𝙰𝙍𝙉𝙄𝙉𝙶 𝙏𝙊𝙋 15 𝙍𝙄𝘾𝙃𝙀𝙎𝙏 𝙐𝙎𝙀𝙍𝙎🌟`;
+    const messageText = `🎀ᴀᴢᴀᴅ ᴄʜᴀᴛ ʙᴏᴛ🎀\n \n${topUsersList.join('\n \n')}\n\n🌟𝙺𝙴𝙴𝙿 𝙀𝙰𝙍𝙉𝙄𝙉𝙶 𝙏𝙊𝙋 15 𝙍𝙄𝘾𝙃𝙀𝙎𝙏 𝙐𝙎𝙀𝙍𝙎🌟`;
     message.reply(messageText);
   }
 };
