@@ -68,7 +68,7 @@ module.exports = {
       }
 
       if (!args[2]) {
-      return api.sendMessage("❌ Please provide a video URL or reply to a video message.", event.threadID, event.messageID);
+      return api.sendMessage("🚫 Please provide a video URL or reply to a video message.", event.threadID, event.messageID);
       }
 
       const videoUrl = args[2];
