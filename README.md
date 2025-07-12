@@ -86,10 +86,10 @@ Add new files in the commands/ folder like:
 
 module.exports = {
   config: {
-    name: "hello",
-    aliases: ["hi"],
+    name: "goat-bot-v2",
+    aliases: ["goat"],
     version: "1.0",
-    author: "YourName",
+    author: "azad",
     countDown: 3,
     role: 0,
     shortDescription: { en: "Say hello" },
@@ -109,7 +109,7 @@ module.exports = {
 
 💡 Framework: Goat Bot V2 Core
 
-📦 Contributors: [Your Team Names]
+📦 Contributors: [goat-team]
 
 
 
