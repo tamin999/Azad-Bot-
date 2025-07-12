@@ -1,115 +1,35 @@
-const fs = require("fs-extra");
-const path = require("path");
-const { getStreamFromURL } = global.utils;
-
-const WELCOME_FILE = path.join(__dirname, "welcome.json");
+const moment = require("moment-timezone");
 
 module.exports = {
   config: {
     name: "welcome",
-    version: "2.0",
+    version: "1.0",
     author: "Azad Vai",
-    countDown: 5,
     role: 0,
-    shortDescription: { en: "Welcomes new members with custom message and image" },
-    longDescription: {
-      en: "Automatically welcomes new users with a customizable message and optional welcome image",
-    },
+    shortDescription: { en: "Auto welcome new members" },
+    longDescription: { en: "Sends welcome message when someone joins the group" },
     category: "group",
-    guide: {
-      en:
-`📌 Welcome Command Guide:
-{pn} set <your message> - Set custom welcome text
-{pn} image <url> - Set welcome image
-{pn} reset - Reset to default
-
-🔁 Variables you can use:
-{name} → New member name
-{threadName} → Group name`
-    },
+    guide: { en: "No command needed. Runs automatically when someone joins." }
   },
 
-  onStart: async function ({ message, event, args }) {
-    if (!fs.existsSync(WELCOME_FILE)) fs.writeJsonSync(WELCOME_FILE, {});
-    let welcomeData = fs.readJsonSync(WELCOME_FILE);
-    const threadID = event.threadID;
-
-    const subCommand = args[0]?.toLowerCase();
-
-    if (!subCommand) {
-      return message.reply(
-        "📌 Commands:\n" +
-        "- welcome set <your message>\n" +
-        "- welcome image <image_url>\n" +
-        "- welcome reset\n\n" +
-        "📌 Variables:\n{name} = User name\n{threadName} = Group name"
-      );
-    }
-
-    switch (subCommand) {
-      case "set": {
-        const customMessage = args.slice(1).join(" ");
-        if (!customMessage) return message.reply("⚠️ Provide the welcome message.");
-        welcomeData[threadID] = welcomeData[threadID] || {};
-        welcomeData[threadID].message = customMessage;
-        fs.writeJsonSync(WELCOME_FILE, welcomeData);
-        return message.reply("✅ Welcome message has been saved.");
-      }
-
-      case "image": {
-        const imageURL = args[1];
-        if (!imageURL || !imageURL.startsWith("http")) return message.reply("⚠️ Provide a valid image URL.");
-        welcomeData[threadID] = welcomeData[threadID] || {};
-        welcomeData[threadID].image = imageURL;
-        fs.writeJsonSync(WELCOME_FILE, welcomeData);
-        return message.reply("🖼️ Welcome image URL saved!");
-      }
-
-      case "reset": {
-        delete welcomeData[threadID];
-        fs.writeJsonSync(WELCOME_FILE, welcomeData);
-        return message.reply("♻️ Welcome settings reset.");
-      }
-
-      default:
-        return message.reply("❌ Invalid command. Use `welcome set`, `welcome image`, or `welcome reset`.");
-    }
-  },
-
-  onEvent: async function ({ event, message, threadsData }) {
+  // Auto trigger when someone joins the group
+  onEvent: async function ({ event, message, usersData, threadsData }) {
     if (event.logMessageType !== "log:subscribe") return;
-    if (!fs.existsSync(WELCOME_FILE)) return;
-    
-    const welcomeData = fs.readJsonSync(WELCOME_FILE);
+
     const threadID = event.threadID;
-    const threadName = (await threadsData.get(threadID))?.threadName || "this group";
-    const config = welcomeData[threadID];
-    if (!config) return;
+    const addedMembers = event.logMessageData.addedParticipants;
 
-    const addedUsers = event.logMessageData.addedParticipants.map(u => u.fullName);
-    const mentions = event.logMessageData.addedParticipants.map(user => ({
-      tag: user.fullName,
-      id: user.userFbId
-    }));
+    const threadData = await threadsData.get(threadID);
+    const memberCount = Object.keys(threadData.members).length;
 
-    let text = config.message || "👋 Welcome {name} to {threadName}!";
-    text = text.replace("{name}", addedUsers.join(", ")).replace("{threadName}", threadName);
+    for (const member of addedMembers) {
+      const name = member.fullName;
+      const uid = member.userFbId;
+      const time = moment().tz("Asia/Dhaka").format("hh:mm:ss A - DD/MM/YYYY - dddd");
 
-    const imageURL = config.image;
-    let attachment = null;
+      const welcomeText = `👋 Hello ${name}\n🎉 Welcome to 𝙂𝙍𝙊𝙐𝙿 𝘾𝙃𝘼𝙏 𝘽𝙊𝙏 𝘾𝙆!\n🧑‍🤝‍🧑 You're the ${memberCount}ᵗʰ member in this group. Please enjoy your stay.\n━━━━━━━━━━━━━━━━\n📅 ${time}`;
 
-    if (imageURL) {
-      try {
-        attachment = await getStreamFromURL(imageURL);
-      } catch (err) {
-        console.error("⚠️ Image load failed:", err.message);
-      }
+      message.send(welcomeText, threadID);
     }
-
-    return message.send({
-      body: text,
-      mentions,
-      attachment
-    });
   }
 };
