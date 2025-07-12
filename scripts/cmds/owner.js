@@ -34,13 +34,13 @@ module.exports = {
       body: `
 👑 𝗕𝗢𝗧 𝗢𝗪𝗡𝗘𝗥 𝗜𝗡𝗙𝗢 👑
 
-🔰 Name: Azad Vai
-🌐 Facebook: fb.com/your.profile
-💻 GitHub: github.com/yourgithub
-📞 Contact: wa.me/8801XXXXXXXXX
+🔰 Name: Yoʋʀ ʌzʌɗ
+🌐 Facebook: fb.com/https://www.facebook.com/profile.php?id=61577896330591
+💻 GitHub: github.com/https://github.com/Bot-azad/Azad-Bot-.git
+📞 Contact: wa.me/880197476****
 🛠️ Developer & Founder of Goat Bot V2
 
-📢 Thanks for using this bot 💖
+📢 🎀𝗔𝘇𝗮𝗱 𝗰𝗵𝗮𝘁 𝗯𝗼𝘁 🎀 💖
       `.trim(),
       attachment
     };
