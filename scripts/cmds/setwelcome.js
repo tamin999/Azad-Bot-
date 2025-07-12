@@ -1,115 +1,73 @@
 const fs = require("fs-extra");
-const path = require("path");
-const { getStreamFromURL } = global.utils;
-
-const WELCOME_FILE = path.join(__dirname, "welcome.json");
 
 module.exports = {
   config: {
     name: "welcome",
+    eventType: ["log:subscribe"],
     version: "2.0",
     author: "Azad Vai",
-    countDown: 5,
-    role: 0,
-    shortDescription: { en: "Welcomes new members with custom message and image" },
-    longDescription: {
-      en: "Automatically welcomes new users with a customizable message and optional welcome image",
-    },
-    category: "group",
-    guide: {
-      en:
-`📌 Welcome Command Guide:
-{pn} set <your message> - Set custom welcome text
-{pn} image <url> - Set welcome image
-{pn} reset - Reset to default
-
-🔁 Variables you can use:
-{name} → New member name
-{threadName} → Group name`
-    },
+    description: "Send welcome message when someone joins group"
   },
 
-  onStart: async function ({ message, event, args }) {
-    if (!fs.existsSync(WELCOME_FILE)) fs.writeJsonSync(WELCOME_FILE, {});
-    let welcomeData = fs.readJsonSync(WELCOME_FILE);
-    const threadID = event.threadID;
+  onStart: async function ({ threadsData, event, message, usersData }) {
+    const { threadID } = event;
 
-    const subCommand = args[0]?.toLowerCase();
+    // Check welcome toggle
+    const thread = await threadsData.get(threadID);
+    const { data, settings } = thread;
+    if (settings?.sendWelcomeMessage !== true) return;
 
-    if (!subCommand) {
-      return message.reply(
-        "📌 Commands:\n" +
-        "- welcome set <your message>\n" +
-        "- welcome image <image_url>\n" +
-        "- welcome reset\n\n" +
-        "📌 Variables:\n{name} = User name\n{threadName} = Group name"
-      );
+    // Get group name and members
+    const groupName = thread.threadInfo?.threadName || "this group";
+    const members = event.logMessageData.addedParticipants;
+    const mentions = [];
+    let names = [];
+
+    for (const member of members) {
+      const uid = member.userFbId || member.userId;
+      const name = (await usersData.get(uid))?.name || member.fullName;
+      mentions.push({ id: uid, tag: name });
+      names.push(name);
     }
 
-    switch (subCommand) {
-      case "set": {
-        const customMessage = args.slice(1).join(" ");
-        if (!customMessage) return message.reply("⚠️ Provide the welcome message.");
-        welcomeData[threadID] = welcomeData[threadID] || {};
-        welcomeData[threadID].message = customMessage;
-        fs.writeJsonSync(WELCOME_FILE, welcomeData);
-        return message.reply("✅ Welcome message has been saved.");
-      }
+    const session = getSession();
+    const userName = names.join(", ");
+    const userNameTag = mentions.map(m => m.tag).join(", ");
+    const multiple = names.length > 1 ? "you all" : "you";
+    const totalMembers = thread.members.length;
 
-      case "image": {
-        const imageURL = args[1];
-        if (!imageURL || !imageURL.startsWith("http")) return message.reply("⚠️ Provide a valid image URL.");
-        welcomeData[threadID] = welcomeData[threadID] || {};
-        welcomeData[threadID].image = imageURL;
-        fs.writeJsonSync(WELCOME_FILE, welcomeData);
-        return message.reply("🖼️ Welcome image URL saved!");
-      }
+    let content = data.welcomeMessage || `🎉 Hello {userName}, welcome to {boxName}! You are member #{memLength}. Have a great {session}!`;
 
-      case "reset": {
-        delete welcomeData[threadID];
-        fs.writeJsonSync(WELCOME_FILE, welcomeData);
-        return message.reply("♻️ Welcome settings reset.");
-      }
+    content = content
+      .replace(/{userName}/g, userName)
+      .replace(/{userNameTag}/g, userNameTag)
+      .replace(/{boxName}/g, groupName)
+      .replace(/{multiple}/g, multiple)
+      .replace(/{session}/g, session)
+      .replace(/{memLength}/g, totalMembers);
 
-      default:
-        return message.reply("❌ Invalid command. Use `welcome set`, `welcome image`, or `welcome reset`.");
-    }
-  },
-
-  onEvent: async function ({ event, message, threadsData }) {
-    if (event.logMessageType !== "log:subscribe") return;
-    if (!fs.existsSync(WELCOME_FILE)) return;
-    
-    const welcomeData = fs.readJsonSync(WELCOME_FILE);
-    const threadID = event.threadID;
-    const threadName = (await threadsData.get(threadID))?.threadName || "this group";
-    const config = welcomeData[threadID];
-    if (!config) return;
-
-    const addedUsers = event.logMessageData.addedParticipants.map(u => u.fullName);
-    const mentions = event.logMessageData.addedParticipants.map(user => ({
-      tag: user.fullName,
-      id: user.userFbId
-    }));
-
-    let text = config.message || "👋 Welcome {name} to {threadName}!";
-    text = text.replace("{name}", addedUsers.join(", ")).replace("{threadName}", threadName);
-
-    const imageURL = config.image;
-    let attachment = null;
-
-    if (imageURL) {
+    // Load attachments if any
+    let attachment = [];
+    if (data.welcomeAttachment?.length) {
       try {
-        attachment = await getStreamFromURL(imageURL);
-      } catch (err) {
-        console.error("⚠️ Image load failed:", err.message);
+        const files = await Promise.all(
+          data.welcomeAttachment.map(id => global.utils.drive.getFile(id))
+        );
+        attachment = files.filter(Boolean).map(f => fs.createReadStream(f.path));
+      } catch (e) {
+        console.error("Error loading welcome files:", e);
       }
     }
 
-    return message.send({
-      body: text,
-      mentions,
-      attachment
-    });
+    message.send({ body: content, mentions, attachment });
   }
 };
+
+// Session helper
+function getSession() {
+  const hour = new Date().getHours();
+  if (hour >= 5 && hour < 12) return "morning";
+  if (hour >= 12 && hour < 17) return "afternoon";
+  if (hour >= 17 && hour < 21) return "evening";
+  return "night";
+  }
