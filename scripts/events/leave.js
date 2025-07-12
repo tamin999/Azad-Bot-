@@ -1,98 +1,79 @@
-const { getTime, drive } = global.utils;
+const axios = require("axios");
+const fs = require("fs-extra");
+const path = require("path");
+const Canvas = require("canvas");
+const { getStreamFromPath } = global.utils;
 
 module.exports = {
-	config: {
-		name: "leave",
-		version: "1.4",
-		author: "NTKhang",
-		category: "events"
-	},
+  config: {
+    name: "goodbye",
+    version: "1.0",
+    author: "Azad Vai",
+    countDown: 5,
+    role: 0,
+    shortDescription: { en: "Send custom goodbye card" },
+    longDescription: {
+      en: "Sends a goodbye image with user's profile photo, name, and group name when they leave the group.",
+    },
+    category: "group",
+  },
 
-	langs: {
-		vi: {
-			session1: "sáng",
-			session2: "trưa",
-			session3: "chiều",
-			session4: "tối",
-			leaveType1: "tự rời",
-			leaveType2: "bị kick",
-			defaultLeaveMessage: "{userName} đã {type} khỏi nhóm"
-		},
-		en: {
-			session1: "morning",
-			session2: "noon",
-			session3: "afternoon",
-			session4: "evening",
-			leaveType1: "left",
-			leaveType2: "was kicked from",
-			defaultLeaveMessage: "{userName} {type} the group"
-		}
-	},
+  onEvent: async function ({ event, message, threadsData }) {
+    if (event.logMessageType !== "log:unsubscribe") return;
 
-	onStart: async ({ threadsData, message, event, api, usersData, getLang }) => {
-		if (event.logMessageType == "log:unsubscribe")
-			return async function () {
-				const { threadID } = event;
-				const threadData = await threadsData.get(threadID);
-				if (!threadData.settings.sendLeaveMessage)
-					return;
-				const { leftParticipantFbId } = event.logMessageData;
-				if (leftParticipantFbId == api.getCurrentUserID())
-					return;
-				const hours = getTime("HH");
+    const userID = event.logMessageData.leftParticipantFbId;
+    const userName = event.logMessageData.leftParticipantFullName;
+    const threadID = event.threadID;
+    const threadName = (await threadsData.get(threadID))?.threadName || "this group";
 
-				const threadName = threadData.threadName;
-				const userName = await usersData.getName(leftParticipantFbId);
+    try {
+      // Load profile picture
+      const avatarURL = `https://graph.facebook.com/${userID}/picture?width=512&height=512`;
+      const avatar = await Canvas.loadImage(avatarURL);
 
-				// {userName}   : name of the user who left the group
-				// {type}       : type of the message (leave)
-				// {boxName}    : name of the box
-				// {threadName} : name of the box
-				// {time}       : time
-				// {session}    : session
+      // Background image (you can change this URL)
+      const bg = await Canvas.loadImage("https://i.imgur.com/zv2h3gB.jpg");
 
-				let { leaveMessage = getLang("defaultLeaveMessage") } = threadData.data;
-				const form = {
-					mentions: leaveMessage.match(/\{userNameTag\}/g) ? [{
-						tag: userName,
-						id: leftParticipantFbId
-					}] : null
-				};
+      // Create canvas
+      const canvas = Canvas.createCanvas(800, 400);
+      const ctx = canvas.getContext("2d");
 
-				leaveMessage = leaveMessage
-					.replace(/\{userName\}|\{userNameTag\}/g, userName)
-					.replace(/\{type\}/g, leftParticipantFbId == event.author ? getLang("leaveType1") : getLang("leaveType2"))
-					.replace(/\{threadName\}|\{boxName\}/g, threadName)
-					.replace(/\{time\}/g, hours)
-					.replace(/\{session\}/g, hours <= 10 ?
-						getLang("session1") :
-						hours <= 12 ?
-							getLang("session2") :
-							hours <= 18 ?
-								getLang("session3") :
-								getLang("session4")
-					);
+      // Draw background
+      ctx.drawImage(bg, 0, 0, 800, 400);
 
-				form.body = leaveMessage;
+      // Circle mask for avatar
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(180, 200, 100, 0, Math.PI * 2, true);
+      ctx.closePath();
+      ctx.clip();
+      ctx.drawImage(avatar, 80, 100, 200, 200);
+      ctx.restore();
 
-				if (leaveMessage.includes("{userNameTag}")) {
-					form.mentions = [{
-						id: leftParticipantFbId,
-						tag: userName
-					}];
-				}
+      // Draw texts
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 40px Arial";
+      ctx.fillText("Goodbye,", 320, 180);
+      ctx.fillStyle = "#ffcc00";
+      ctx.fillText(userName, 320, 240);
+      ctx.fillStyle = "#cccccc";
+      ctx.font = "30px Arial";
+      ctx.fillText(`from ${threadName}`, 320, 290);
 
-				if (threadData.data.leaveAttachment) {
-					const files = threadData.data.leaveAttachment;
-					const attachments = files.reduce((acc, file) => {
-						acc.push(drive.getFile(file, "stream"));
-						return acc;
-					}, []);
-					form.attachment = (await Promise.allSettled(attachments))
-						.filter(({ status }) => status == "fulfilled")
-						.map(({ value }) => value);
-				}
-				message.send(form);
-			};
-	}
+      // Save and send image
+      const filePath = path.join(__dirname, "temp", `goodbye_${userID}.png`);
+      fs.ensureDirSync(path.dirname(filePath));
+      fs.writeFileSync(filePath, canvas.toBuffer("image/png"));
+
+      await message.send({
+        body: `👋 ${userName} has left ${threadName}.`,
+        attachment: await getStreamFromPath(filePath),
+      });
+
+      // Cleanup
+      fs.unlinkSync(filePath);
+    } catch (err) {
+      console.error("❌ Goodbye image error:", err);
+    }
+  },
 };
