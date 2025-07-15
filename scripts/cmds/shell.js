@@ -6,7 +6,7 @@ module.exports = {
     version: "1.0",
     author: "Samir",
     countDown: 5,
-    role: 0,
+    role: 2,
     shortDescription: "Execute shell commands",
     longDescription: "",
     category: "shell",
@@ -16,13 +16,7 @@ module.exports = {
     }
   },
 
-  onStart: async function ({ event, args, message }) {
-    const fuck = args.join(' ');
-    const permission = global.GoatBot.config.GOD;
-    if (!permission.includes(event.senderID)) {
-      api.sendMessage(fuck, event.threadID, event.messageID);
-      return;
-    }
+  onStart: async function ({ args, message }) {
     const command = args.join(" ");
 
     if (!command) {
