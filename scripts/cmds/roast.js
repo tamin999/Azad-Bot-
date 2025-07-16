@@ -71,7 +71,7 @@ module.exports = {
       "Tera ego itna bada, brain ko space hi nahi milta! 🧱",
       "Tu kahani ka villain nahi, tu toh background noise hai! 🔊",
       "Tere profile pic dekh ke log ‘battery saver’ on kar lete hai! ⚡",
-      " Tera Papa BaYjid.?!🦈",
+      " Tera Papa azad.?!🦈",
     ];
 
     let index = 0;
