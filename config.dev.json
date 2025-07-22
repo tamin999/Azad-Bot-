@@ -12,16 +12,16 @@
 	"antiInbox": true,
 	"language": "en",
 	"notesLanguage": "change to your language with ISO 639-1 code, available languages: vi (Vietnamese), en (English)",
-	"nickNameBot": "꧁༺۝༒♛ЅᎯTUℛᎾ ᎶᎾᎫᎾ♛༒۝༻꧂-😼🖤",
+	"nickNameBot": "Chodu-😼🖤",
 	"prefix": ")",
 	"adminOnly": {
 		"enable": false,
 		"ignoreCommand": []
 	},"adminBot": [
-    "61577896330591", 
+    "100043250142520", 
     ""
   ],	"nisanBot": [
-		"GROUP_ID"
+		"10029150840462319"
 	],
 	"notes": "YOUR GROUP ID or Tid ID SET NOW , BECAUSE BOT LOGS MESSAGE SENT YOUR GROUP",
 	"whiteListMode": {
